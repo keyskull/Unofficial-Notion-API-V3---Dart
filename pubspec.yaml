@@ -5,17 +5,14 @@ author: Cullen Lee
 homepage: https://www.cullen.ml/
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   http: ^0.12.2
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  test: ^1.15.7
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

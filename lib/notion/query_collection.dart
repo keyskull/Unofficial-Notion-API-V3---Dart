@@ -1,3 +1,4 @@
+// @dart=2.9
 // To parse this JSON data, do
 //
 //     final loadPageChunk = loadPageChunkFromJson(jsonString);
@@ -35,8 +36,8 @@ class QueryCollection {
   Map<String, dynamic> toJson() => {
         "collectionId": collectionId,
         "collectionViewId": collectionViewId,
-        "query" : query != null ?  query.toJson(): {},
-        "loader" : loader != null ?  loader.toJson(): {},
+        "query" : query == null ? null : query.toJson(),
+        "loader" : loader != null ? null : loader.toJson(),
       };
 }
 
@@ -88,8 +89,8 @@ class Query {
       );
 
   Map<String, dynamic> toJson() => {
-        "sort": List<dynamic>.from(sort.map((x) => x.toJson())),
-        "aggregations": List<dynamic>.from(aggregations.map((x) => x.toJson())),
+        "sort": List<dynamic>.from((sort ?? []).map((x) => x.toJson())),
+        "aggregations": List<dynamic>.from((aggregations ?? []).map((x) => x.toJson())),
       };
 }
 

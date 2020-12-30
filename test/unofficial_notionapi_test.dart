@@ -1,6 +1,8 @@
+// @dart=2.9
 import 'dart:convert';
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
+
 import '../lib/notion/notion_api.dart';
 
 import '../lib/notion/load_page_chunk.dart';

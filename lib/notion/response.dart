@@ -1,16 +1,17 @@
+// @dart=2.9
+
 // To parse this JSON data, do
 //
 //     final resultLoadPageChunk = resultLoadPageChunkFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:math';
 
 import 'notion_api.dart';
 
-Response responseFromJson(String str) =>
-    Response.fromJson(json.decode(str));
+Response responseFromJson(String str) => Response.fromJson(json.decode(str));
 
-String responseToJson(Response data) =>
-    json.encode(data.toJson());
+String responseToJson(Response data) => json.encode(data.toJson());
 
 class Response {
   Response({
@@ -21,10 +22,11 @@ class Response {
   final Result result;
   final RecordMap recordMap;
 
-  factory Response.fromJson(Map<String, dynamic> json) =>
-      Response(
+  factory Response.fromJson(Map<String, dynamic> json) => Response(
         result: json["result"] == null ? null : Result.fromJson(json["result"]),
-        recordMap: json["recordMap"] == null ? null : RecordMap.fromJson(json["recordMap"]),
+        recordMap: json["recordMap"] == null
+            ? null
+            : RecordMap.fromJson(json["recordMap"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,7 +81,8 @@ class Block {
     return Block(blockData: data);
   }
 
-  Map<String, dynamic> toJson() => blockData.map((key, value) => MapEntry(key,value.toJson()));
+  Map<String, dynamic> toJson() =>
+      (blockData ?? {}).map((key, value) => MapEntry(key, value.toJson()));
 }
 
 class BlockData {
@@ -196,8 +199,7 @@ class Properties {
         "last_edited_by_id": lastEditedById,
         "shard_id": shardId,
         "space_id": spaceId,
-        "view_ids":
-            viewIds == null ? null : List<dynamic>.from(viewIds.map((x) => x)),
+        "view_ids": List<dynamic>.from((viewIds ?? []).map((x) => x)),
         "collection_id": collectionId == null ? null : collectionId,
         "permissions": permissions == null
             ? null
@@ -221,16 +223,15 @@ class Permission {
   factory Permission.fromJson(Map<String, dynamic> json) => Permission(
         role: json["role"],
         type: json["type"],
-        userId: json["user_id"] == null ? null : json["user_id"],
-        allowDuplicate:
-            json["allow_duplicate"] == null ? null : json["allow_duplicate"],
+        userId: json["user_id"],
+        allowDuplicate: json["allow_duplicate"],
       );
 
   Map<String, dynamic> toJson() => {
         "role": role,
         "type": type,
-        "user_id": userId == null ? null : userId,
-        "allow_duplicate": allowDuplicate == null ? null : allowDuplicate,
+        "user_id": userId,
+        "allow_duplicate": allowDuplicate,
       };
 }
 
@@ -238,10 +239,6 @@ class BlockProperties {
   Map<String, List<dynamic>> blockProperties;
 
   BlockProperties({this.blockProperties});
-
-  List<List<String>> qfEm;
-  List<List<dynamic>> qglH;
-  List<List<String>> title;
 
   factory BlockProperties.fromJson(Map<String, dynamic> json) {
     Map<String, List<dynamic>> data = Map();
@@ -251,12 +248,10 @@ class BlockProperties {
     return BlockProperties(blockProperties: data);
   }
 
-  Map<String, dynamic> toJson() => blockProperties;
+  Map<String, dynamic> toJson() => blockProperties ?? {};
 }
 
-class ColumnType {}
-
-class DateRange extends ColumnType {
+class DateRange {
   DateRange({
     this.type,
     this.endDate,
@@ -275,10 +270,12 @@ class DateRange extends ColumnType {
 
   Map<String, dynamic> toJson() => {
         "type": type,
-        "end_date":
-            "${endDate.year.toString().padLeft(4, '0')}-${endDate.month.toString().padLeft(2, '0')}-${endDate.day.toString().padLeft(2, '0')}",
-        "start_date":
-            "${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
+        "end_date": endDate == null
+            ? null
+            : "${endDate.year.toString().padLeft(4, '0')}-${endDate.month.toString().padLeft(2, '0')}-${endDate.day.toString().padLeft(2, '0')}",
+        "start_date": startDate == null
+            ? null
+            : "${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
       };
 }
 
@@ -303,7 +300,8 @@ class Collection {
     return Collection(collectionData: data);
   }
 
-  Map<String, dynamic> toJson() => collectionData.map((key, value) => MapEntry(key,value.toJson()));
+  Map<String, dynamic> toJson() =>
+      collectionData.map((key, value) => MapEntry(key, value.toJson()));
 }
 
 class CollectionData {
@@ -322,7 +320,7 @@ class CollectionData {
 
   Map<String, dynamic> toJson() => {
         "role": role,
-        "value": value.toJson(),
+        "value": value == null ? null : value.toJson(),
       };
 }
 
@@ -363,8 +361,8 @@ class CollectionDataProperties {
   Map<String, dynamic> toJson() => {
         "id": id,
         "version": version,
-        "name": List<dynamic>.from(
-            name.map((x) => List<dynamic>.from(x.map((x) => x)))),
+        "name": List<dynamic>.from((name ?? [])
+            .map((x) => List<dynamic>.from((x ?? []).map((x) => x)))),
         "schema": schema.toJson(),
         "parent_id": parentId,
         "parent_table": parentTable,
@@ -397,7 +395,8 @@ class Schema {
     return Schema(schemaData: data);
   }
 
-  Map<String, dynamic> toJson() => schemaData.map((key, value) => MapEntry(key,value.toJson()));
+  Map<String, dynamic> toJson() =>
+      schemaData.map((key, value) => MapEntry(key, value.toJson()));
 }
 
 class Option {
@@ -493,7 +492,8 @@ class CollectionView {
     return CollectionView(collectionViewData: data);
   }
 
-  Map<String, dynamic> toJson() => collectionViewData.map((key, value) => MapEntry(key,value.toJson()));
+  Map<String, dynamic> toJson() =>
+      collectionViewData.map((key, value) => MapEntry(key, value.toJson()));
 }
 
 class CollectionViewData {
@@ -567,11 +567,13 @@ class CollectionViewDataValue {
         "version": version,
         "type": type,
         "name": name,
-        "format": format == null? null : format.toJson(),
+        "format": format == null ? null : format.toJson(),
         "parent_id": parentId,
         "parent_table": parentTable,
         "alive": alive,
-        "page_sort": pageSort == null ? null : List<dynamic>.from(pageSort.map((x) => x)),
+        "page_sort": pageSort == null
+            ? null
+            : List<dynamic>.from(pageSort.map((x) => x)),
         "query2": query2 == null ? null : query2.toJson(),
         "shard_id": shardId,
         "space_id": spaceId,
@@ -674,7 +676,6 @@ class Space {
     this.spaceData,
   });
 
-
   factory Space.fromJson(Map<String, dynamic> json) {
     Map<String, SpaceData> data = Map();
 
@@ -719,7 +720,9 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         type: json["type"],
-        blockIds: json["blockIds"] ==null ? null : List<String>.from(json["blockIds"].map((x) => x)),
+        blockIds: json["blockIds"] == null
+            ? null
+            : List<String>.from(json["blockIds"].map((x) => x)),
         aggregationResults: List<AggregationResult>.from(
             json["aggregationResults"]
                 .map((x) => AggregationResult.fromJson(x))),
