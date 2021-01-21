@@ -37,7 +37,7 @@ class QueryCollection {
         "collectionId": collectionId,
         "collectionViewId": collectionViewId,
         "query" : query == null ? null : query.toJson(),
-        "loader" : loader != null ? null : loader.toJson(),
+        "loader" : loader == null ? null : loader.toJson(),
       };
 }
 
