@@ -649,26 +649,6 @@ class Query2 {
       };
 }
 
-class Aggregation {
-  Aggregation({
-    this.property,
-    this.aggregator,
-  });
-
-  String property;
-  String aggregator;
-
-  factory Aggregation.fromJson(Map<String, dynamic> json) => Aggregation(
-        property: json["property"],
-        aggregator: json["aggregator"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "property": property,
-        "aggregator": aggregator,
-      };
-}
-
 class Space {
   final Map<String, SpaceData> spaceData;
 

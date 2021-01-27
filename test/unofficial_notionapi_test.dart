@@ -15,13 +15,8 @@ void main() {
         collectionViewId: PrivateConstants.collectionViewId,
         query: Query(
             sort: [Sort(property: "QglH", direction: "descending")],
-            aggregations: []),
-        loader: Loader(
-            type: "table",
-            limit: 50,
-            searchQuery: "",
-            userTimeZone: "America/Los_Angeles",
-            loadContentCover: false)));
+            aggregations: [Aggregation(property: "title",aggregator: "count")]),
+        loader: Loader(type: "table")));
 
 
     var loadPageChunk = jsonEncode(LoadPageChunk(
@@ -30,8 +25,8 @@ void main() {
         chunkNumber: 0,
         verticalColumns: true));
 
-
-    var jsonResponse = await NotionApiAgent.queryCollection(queryCollectionInput);
+    print(queryCollectionInput);
+    final jsonResponse = await NotionApiAgent.queryCollection(queryCollectionInput);
     // print("$jsonResponse");
     final data = jsonResponse;
     final blockMap = data.recordMap.block.blockData;

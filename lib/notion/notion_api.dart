@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:unofficial_notionapi/notion/response.dart';
+import 'response.dart';
 
 
 class NotionApiAgent {
@@ -45,6 +45,7 @@ class NotionApiAgent {
 }
 
 
+
 class Sort {
   Sort({
     this.property,
@@ -62,5 +63,25 @@ class Sort {
   Map<String, dynamic> toJson() => {
     "property": property,
     "direction": direction,
+  };
+}
+
+class Aggregation {
+  Aggregation({
+    this.property = "title",
+    this.aggregator = "count",
+  });
+
+  String property;
+  String aggregator;
+
+  factory Aggregation.fromJson(Map<String, dynamic> json) => Aggregation(
+    property: json["property"],
+    aggregator: json["aggregator"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "property": property,
+    "aggregator": aggregator,
   };
 }

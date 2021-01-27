@@ -36,18 +36,18 @@ class QueryCollection {
   Map<String, dynamic> toJson() => {
         "collectionId": collectionId,
         "collectionViewId": collectionViewId,
-        "query" : query == null ? null : query.toJson(),
-        "loader" : loader == null ? null : loader.toJson(),
+        "query" : query == null ? Query() : query.toJson(),
+        "loader" : loader == null ? Loader() : loader.toJson(),
       };
 }
 
 class Loader {
   Loader({
-    this.type,
-    this.limit,
-    this.searchQuery,
-    this.userTimeZone,
-    this.loadContentCover,
+    this.type = "table",
+    this.limit = 50,
+    this.searchQuery = "",
+    this.userTimeZone = "America/Los_Angeles",
+    this.loadContentCover = false,
   });
 
   String type;
@@ -75,8 +75,8 @@ class Loader {
 
 class Query {
   Query({
-    this.sort,
-    this.aggregations,
+    this.sort = const <Sort>[],
+    this.aggregations = const <Aggregation>[],
   });
 
   List<Sort> sort;
@@ -94,24 +94,6 @@ class Query {
       };
 }
 
-class Aggregation {
-  Aggregation({
-    this.property,
-    this.aggregator,
-  });
 
-  String property;
-  String aggregator;
-
-  factory Aggregation.fromJson(Map<String, dynamic> json) => Aggregation(
-        property: json["property"],
-        aggregator: json["aggregator"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "property": property,
-        "aggregator": aggregator,
-      };
-}
 
 
