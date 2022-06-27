@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:convert';
 
 import 'package:test/test.dart';
@@ -8,6 +7,8 @@ import '../lib/notion/notion_api.dart';
 import '../lib/notion/load_page_chunk.dart';
 import '../lib/notion/query_collection.dart';
 import '../sample/constants.dart';
+
+
 void main() {
   test('adds one to input values', () async {
     final queryCollectionInput = jsonEncode(QueryCollection(
@@ -31,7 +32,7 @@ void main() {
     final data = jsonResponse;
     final blockMap = data.recordMap.block.blockData;
     data.result.blockIds.forEach((element) {
-      print(blockMap[element].value.properties.blockProperties.values);
+      print(blockMap[element]!.value.properties.blockProperties.values);
     });
 
     data.recordMap.collectionView.collectionViewData.values.forEach((element) {

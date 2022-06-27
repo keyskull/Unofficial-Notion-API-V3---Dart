@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'dart:convert';
 
@@ -8,7 +8,7 @@ import 'response.dart';
 
 class NotionApiAgent {
   static Future<Response> _call(String name, json) async => await _convert(http.post(
-          "https://autumn-meadow-bdd9.cullen.workers.dev/cors/?apiurl=https://www.notion.so/api/v3/$name",
+          Uri(path: "https://autumn-meadow-bdd9.cullen.workers.dev/cors/?apiurl=https://www.notion.so/api/v3/$name"),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -47,13 +47,13 @@ class NotionApiAgent {
 
 
 class Sort {
-  Sort({
-    this.property,
-    this.direction,
-  });
-
   String property;
   String direction;
+
+  Sort({
+    required this.property,
+    required this.direction,
+  });
 
   factory Sort.fromJson(Map<String, dynamic> json) => Sort(
     property: json["property"],
